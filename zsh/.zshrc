@@ -4,7 +4,6 @@ fi
 
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
-
 export COLORTERM=truecolor
 
 plugins=(
@@ -23,9 +22,9 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Environment
-export EDITOR='nvim'
-export VISUAL='nvim'
-export LANG=en_US.UTF-8
+export EDITOR="nvim"
+export VISUAL="nvim"
+export LANG="en_US.UTF-8"
 
 export PATH="$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH"
 export GOPATH="$HOME/go"
@@ -36,9 +35,8 @@ export HISTSIZE=100000
 export SAVEHIST=100000
 setopt SHARE_HISTORY HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_FIND_NO_DUPS
 
-# TOOLS
 # eza
-export EZA_COLORS="di=1;94:ex=1;33"
+export EZA_COLORS="di=38;5;109:ex=38;5;144:fi=38;5;250"
 alias ls='eza --icons --git'
 alias ll='eza -lah --icons --git'
 alias la='eza -a --icons'
@@ -48,7 +46,16 @@ alias lt='eza --tree --level=2 --icons'
 eval "$(zoxide init zsh)"
 
 # fzf
-export FZF_DEFAULT_OPTS='--height 70% --layout=reverse --border'
+export FZF_DEFAULT_OPTS='
+  --height 60%
+  --layout=reverse
+  --border=rounded
+  --color=bg:#0C0C0C,bg+:#181818
+  --color=fg:#B8B8B8,fg+:#D6D6D6
+  --color=hl:#708090,hl+:#8194A8
+  --color=prompt:#708090
+  --color=pointer:#8194A8
+'
 
 # pnpm
 alias pn="pnpm"
@@ -91,13 +98,18 @@ if grep -qi microsoft /proc/version; then
   alias winhome='cd /mnt/c/Users/$(whoami | tr -d "\r")'
 fi
 
-# Light Autosuggestions
+# Autosuggestions (config BEFORE source)
 if [[ -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ]]; then
-  source ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=cyan'
-  ZSH_AUTOSUGGEST_USE_ASYNC=1
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+  ZSH_AUTOSUGGEST_USE_ASYNC=0
   ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=15
-  ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+  ZSH_AUTOSUGGEST_STRATEGY=(history)
+
+  source ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
 unsetopt BEEP
+
+# To customize prompt, run `p10k configure` or edit ~/dotfiles/zsh/.p10k.zsh.
+[[ ! -f ~/dotfiles/zsh/.p10k.zsh ]] || source ~/dotfiles/zsh/.p10k.zsh
+alias fd=fdfind
